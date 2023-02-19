@@ -1,18 +1,16 @@
 ﻿using System;
 using Mirzipan.Bibliotheca.Disposables;
-using Mirzipan.Framed.Extensions;
 using Mirzipan.Scheduler;
 using UnityEngine;
-using UnityEngine.TerrainUtils;
 
 namespace Mirzipan.Framed.Unity
 {
-    public class FramedBehaviour: MonoBehaviour, IContainDisposer
+    public class FramedBehaviour: MonoBehaviour, IHaveDisposer
     {
         private CompositeDisposable _disposer;
         private Scheduler.Scheduler _scheduler;
 
-        CompositeDisposable IContainDisposer.Disposer
+        CompositeDisposable IHaveDisposer.Disposer
         {
             get => _disposer ??= new CompositeDisposable();
             set => _disposer = value;

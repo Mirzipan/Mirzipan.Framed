@@ -16,6 +16,9 @@
      "framework",
      "frame"
   ],
-  "dependencies": { 
+  "dependencies": {
+    "net.mirzipan.bibliotheca" : "1.0.2",
+    "net.mirzipan.extensions" : "1.2.3",
+    "net.mirzipan.scheduler" : "1.0.1"
   }
 }

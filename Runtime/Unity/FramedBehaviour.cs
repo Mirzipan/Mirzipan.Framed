@@ -22,11 +22,15 @@ namespace Mirzipan.Framed.Unity
 
         protected virtual void Start()
         {
+            OnCoreLoading();
+            
             // TODO: wait for core if not loaded yet
             if (Core.Instance.IsLoading)
             {
                 return;
             }
+
+            OnCoreLoaded();
             
             _scheduler = Core.Instance.Scheduler;
         }
@@ -37,6 +41,20 @@ namespace Mirzipan.Framed.Unity
         }
 
         #endregion Lifecycle
+
+        #region Loading
+
+        protected virtual void OnCoreLoading()
+        {
+            
+        }
+
+        protected virtual void OnCoreLoaded()
+        {
+            
+        }
+
+        #endregion Loading
 
         #region EventBus
 

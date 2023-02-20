@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirzipan.Bibliotheca.Unity;
-using Mirzipan.Extensions.Collections;
 using Mirzipan.Framed.Exceptions;
 using Mirzipan.Framed.Modules;
-using Mirzipan.Scheduler.Unity;
-using UnityEngine;
+using Mirzipan.Framed.Scheduler;
 
 namespace Mirzipan.Framed
 {
@@ -15,12 +13,12 @@ namespace Mirzipan.Framed
         private readonly Dictionary<Type, CoreModule> _modulesByType = new Dictionary<Type, CoreModule>();
 
         private CoreState _state;
-        private Scheduler.Scheduler _scheduler;
+        private SchedulerModule _scheduler;
 
         public CoreState State => _state;
         public bool IsLoading => _state == CoreState.Loading;
 
-        public Scheduler.Scheduler Scheduler => _scheduler;
+        public SchedulerModule Scheduler => _scheduler ??= Get<SchedulerModule>();
 
         #region Lifecycle
 
@@ -45,9 +43,6 @@ namespace Mirzipan.Framed
             {
                 entry.Unload();
             }
-
-            _scheduler.Dispose();
-            _scheduler = null;
         }
 
         #endregion Lifecycle
@@ -74,9 +69,6 @@ namespace Mirzipan.Framed
 
         private void InitInternals()
         {
-            double frameBudget = 1d / Application.targetFrameRate * .5f;
-            _scheduler = new Scheduler.Scheduler(new RealTime(), frameBudget);
-
             // TODO: get these from somewhere and sort topologically
             var modules = new List<CoreModule>();
             foreach (CoreModule entry in modules)

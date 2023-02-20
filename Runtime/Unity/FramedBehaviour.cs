@@ -1,22 +1,25 @@
 ﻿using System;
 using Mirzipan.Bibliotheca.Disposables;
+using Mirzipan.Framed.Scheduler;
 using Mirzipan.Scheduler;
 using UnityEngine;
 
 namespace Mirzipan.Framed.Unity
 {
-    public class FramedBehaviour: MonoBehaviour, IHaveDisposer
+    public class FramedBehaviour: MonoBehaviour, IDisposerContainer
     {
         private CompositeDisposable _disposer;
-        private Scheduler.Scheduler _scheduler;
+        
+        // TODO: this will be injected at some point
+        private SchedulerModule _scheduler;
 
-        CompositeDisposable IHaveDisposer.Disposer
+        CompositeDisposable IDisposerContainer.Disposer
         {
             get => _disposer ??= new CompositeDisposable();
             set => _disposer = value;
         }
 
-        private Scheduler.Scheduler Scheduler => _scheduler;
+        private SchedulerModule Scheduler => _scheduler;
 
         #region Lifecycle
 
@@ -85,12 +88,12 @@ namespace Mirzipan.Framed.Unity
 
         protected IDisposable Schedule(TimeSpan dueTime, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime, update).DisposeWith(this);
+            return _scheduler.Schedule(dueTime.TotalSeconds, update).DisposeWith(this);
         }
 
         protected IDisposable Schedule(TimeSpan dueTime, TimeSpan period, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime, period, update).DisposeWith(this);
+            return _scheduler.Schedule(dueTime.TotalSeconds, period.TotalSeconds, update).DisposeWith(this);
         }
 
         protected void Unschedule(DeferredUpdate update)

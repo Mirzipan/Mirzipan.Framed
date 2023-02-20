@@ -1,6 +1,4 @@
-﻿using Mirzipan.Framed.Modules;
-
-namespace Mirzipan.Framed
+﻿namespace Mirzipan.Framed.Modules
 {
     public interface ICoreModule: IModule
     {

@@ -1,12 +1,19 @@
-﻿using Mirzipan.Framed.Modules;
+﻿using Mirzipan.Bibliotheca.Disposables;
 
-namespace Mirzipan.Framed
+namespace Mirzipan.Framed.Modules
 {
-    public abstract class CoreModule: Module<Core>, ICoreModule
+    public abstract class CoreModule: Module<Core>, ICoreModule, IDisposerContainer
     {
         private Core _core;
+        private CompositeDisposable _disposer;
 
         protected override IModuleContainer Container => _core;
+        
+        CompositeDisposable IDisposerContainer.Disposer
+        {
+            get => _disposer ??= new CompositeDisposable();
+            set => _disposer = value;
+        }
 
         #region Lifecycle
 
@@ -17,6 +24,7 @@ namespace Mirzipan.Framed
         internal void Init(Core core)
         {
             _core = core;
+            OnInit();
         }
 
         /// <summary>
@@ -24,6 +32,7 @@ namespace Mirzipan.Framed
         /// </summary>
         internal void Load()
         {
+            OnLoad();
         }
 
         /// <summary>
@@ -31,6 +40,8 @@ namespace Mirzipan.Framed
         /// </summary>
         internal void Unload()
         {
+            _disposer?.Dispose();
+            OnUnload();
         }
 
         #endregion Lifecycle

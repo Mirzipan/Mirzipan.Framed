@@ -3,6 +3,7 @@ using Mirzipan.Bibliotheca.Disposables;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion.Meta;
 using Mirzipan.Scheduler;
+// ReSharper disable UnassignedReadonlyField
 
 namespace Mirzipan.Framed.Modules
 {
@@ -12,7 +13,6 @@ namespace Mirzipan.Framed.Modules
         private CompositeDisposable _disposer;
 
         [Inject]
-        // ReSharper disable once UnassignedReadonlyField
         protected readonly SchedulerModule Scheduler;
 
         protected override IModuleContainer Container => _core;

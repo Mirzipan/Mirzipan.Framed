@@ -1,8 +1,10 @@
 ﻿using System;
 using Mirzipan.Bibliotheca.Disposables;
 using Mirzipan.Framed.Scheduler;
+using Mirzipan.Infusion.Meta;
 using Mirzipan.Scheduler;
 using UnityEngine;
+// ReSharper disable UnassignedReadonlyField
 
 namespace Mirzipan.Framed.Unity
 {
@@ -10,16 +12,14 @@ namespace Mirzipan.Framed.Unity
     {
         private CompositeDisposable _disposer;
         
-        // TODO: this will be injected at some point
-        private SchedulerModule _scheduler;
+        [Inject]
+        protected readonly SchedulerModule Scheduler;
 
         CompositeDisposable IDisposerContainer.Disposer
         {
             get => _disposer ??= new CompositeDisposable();
             set => _disposer = value;
         }
-
-        private SchedulerModule Scheduler => _scheduler;
 
         #region Lifecycle
 
@@ -35,7 +35,7 @@ namespace Mirzipan.Framed.Unity
 
             OnCoreLoaded();
             
-            _scheduler = Core.Instance.Scheduler;
+            Core.Instance.Container.Inject(this);
         }
 
         protected void OnDestroy()
@@ -78,27 +78,27 @@ namespace Mirzipan.Framed.Unity
 
         protected IDisposable Schedule(double dueTime, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime, update).DisposeWith(this);
+            return Scheduler.Schedule(dueTime, update).DisposeWith(this);
         }
 
         protected IDisposable Schedule(double dueTime, double period, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime, period, update).DisposeWith(this);
+            return Scheduler.Schedule(dueTime, period, update).DisposeWith(this);
         }
 
         protected IDisposable Schedule(TimeSpan dueTime, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime.TotalSeconds, update).DisposeWith(this);
+            return Scheduler.Schedule(dueTime.TotalSeconds, update).DisposeWith(this);
         }
 
         protected IDisposable Schedule(TimeSpan dueTime, TimeSpan period, DeferredUpdate update)
         {
-            return _scheduler.Schedule(dueTime.TotalSeconds, period.TotalSeconds, update).DisposeWith(this);
+            return Scheduler.Schedule(dueTime.TotalSeconds, period.TotalSeconds, update).DisposeWith(this);
         }
 
         protected void Unschedule(DeferredUpdate update)
         {
-            _scheduler.Unschedule(update);
+            Scheduler.Unschedule(update);
         }
 
         #endregion Scheduler

@@ -84,11 +84,10 @@ namespace Mirzipan.Framed
             _container = new InjectionContainer();
             _container.Bind(typeof(IInjectionContainer), _container);
             
-            // TODO: get these from somewhere and sort topologically
-            _container.Bind(new SchedulerModule());
-            _container.Bind(new DefinitionModule());
-            _container.Bind(new LocalizationModule());
-            _container.Bind(new ModelModule());
+            if (configuration)
+            {
+                configuration.AddBindings(_container);
+            }
 
             _container.InjectAll();
             

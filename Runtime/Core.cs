@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirzipan.Bibliotheca.Unity;
-using Mirzipan.Framed.Definitions;
 using Mirzipan.Framed.Exceptions;
-using Mirzipan.Framed.Localization;
-using Mirzipan.Framed.Models;
 using Mirzipan.Framed.Modules;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion;
@@ -88,6 +85,8 @@ namespace Mirzipan.Framed
             {
                 configuration.AddBindings(_container);
             }
+            
+            // TODO: maybe look for extra IConfigurations on GO and in SO (add execution order?)
 
             _container.InjectAll();
             

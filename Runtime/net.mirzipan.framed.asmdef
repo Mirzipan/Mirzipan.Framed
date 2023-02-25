@@ -4,7 +4,8 @@
     "references": [
         "Mirzipan.Extensions",
         "Mirzipan.Bibliotheca",
-        "Mirzipan.Scheduler"
+        "Mirzipan.Scheduler",
+        "Mirzipan.Infusion"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

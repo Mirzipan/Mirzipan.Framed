@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirzipan.Bibliotheca.Unity;
+using Mirzipan.Framed.Definitions;
 using Mirzipan.Framed.Exceptions;
+using Mirzipan.Framed.Localization;
+using Mirzipan.Framed.Models;
 using Mirzipan.Framed.Modules;
 using Mirzipan.Framed.Scheduler;
+using Mirzipan.Infusion;
+using UnityEngine;
 
 namespace Mirzipan.Framed
 {
     public class Core : Singleton<Core>, IModuleContainer
     {
-        private readonly Dictionary<Type, CoreModule> _modulesByType = new Dictionary<Type, CoreModule>();
+        private readonly Dictionary<Type, CoreModule> _modulesByType = new();
+        private InjectionContainer _container;
 
         private CoreState _state;
         private SchedulerModule _scheduler;
 
+        [SerializeField]
+        private CoreConfiguration _configuration;
+
         public CoreState State => _state;
         public bool IsLoading => _state == CoreState.Loading;
 
+        public InjectionContainer Container => _container;
         public SchedulerModule Scheduler => _scheduler ??= Get<SchedulerModule>();
 
         #region Lifecycle
@@ -29,7 +39,7 @@ namespace Mirzipan.Framed
             _state = CoreState.Loading;
 
             // TODO: async
-            InitInternals();
+            InitInternals(_configuration);
 
             _state = CoreState.Loaded;
         }
@@ -37,6 +47,8 @@ namespace Mirzipan.Framed
         private void OnDestroy()
         {
             _state = CoreState.Unloading;
+            _container.Dispose();
+            _container = null;
 
             var modules = _modulesByType.Values.ToList();
             foreach (CoreModule entry in modules)
@@ -67,18 +79,37 @@ namespace Mirzipan.Framed
 
         #region Private
 
-        private void InitInternals()
+        private void InitInternals(CoreConfiguration configuration)
         {
-            // TODO: get these from somewhere and sort topologically
-            var modules = new List<CoreModule>();
-            foreach (CoreModule entry in modules)
-            {
-                entry.Init(this);
-            }
+            _container = new InjectionContainer();
+            _container.Bind(typeof(IInjectionContainer), _container);
             
-            foreach (CoreModule entry in modules)
+            // TODO: get these from somewhere and sort topologically
+            _container.Bind(new SchedulerModule());
+            _container.Bind(new DefinitionModule());
+            _container.Bind(new LocalizationModule());
+            _container.Bind(new ModelModule());
+
+            _container.InjectAll();
+            
+            var modules = new List<CoreModule>();
+            modules.AddRange(_container.ResolveAll<CoreModule>());
+            int count = modules.Count;
+            
+            for (int i = 0; i < count; i++)
             {
-                entry.Load();
+                CoreModule entry = modules[i];
+                _modulesByType[entry.GetType()] = entry;
+            }            
+            
+            for (var i = 0; i < count; i++)
+            {
+                modules[i].Init(this);
+            }
+
+            for (var i = 0; i < count; i++)
+            {
+                modules[i].Load();
             }
         }
 

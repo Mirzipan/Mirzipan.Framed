@@ -1,4 +1,8 @@
-﻿using Mirzipan.Bibliotheca.Disposables;
+﻿using System;
+using Mirzipan.Bibliotheca.Disposables;
+using Mirzipan.Framed.Scheduler;
+using Mirzipan.Infusion.Meta;
+using Mirzipan.Scheduler;
 
 namespace Mirzipan.Framed.Modules
 {
@@ -6,6 +10,10 @@ namespace Mirzipan.Framed.Modules
     {
         private Core _core;
         private CompositeDisposable _disposer;
+
+        [Inject]
+        // ReSharper disable once UnassignedReadonlyField
+        protected readonly SchedulerModule Scheduler;
 
         protected override IModuleContainer Container => _core;
         
@@ -68,5 +76,34 @@ namespace Mirzipan.Framed.Modules
         }
 
         #endregion Protected
+        
+        #region Scheduler
+
+        protected IDisposable Schedule(double dueTime, DeferredUpdate update)
+        {
+            return Scheduler.Schedule(dueTime, update).DisposeWith(this);
+        }
+
+        protected IDisposable Schedule(double dueTime, double period, DeferredUpdate update)
+        {
+            return Scheduler.Schedule(dueTime, period, update).DisposeWith(this);
+        }
+
+        protected IDisposable Schedule(TimeSpan dueTime, DeferredUpdate update)
+        {
+            return Scheduler.Schedule(dueTime.TotalSeconds, update).DisposeWith(this);
+        }
+
+        protected IDisposable Schedule(TimeSpan dueTime, TimeSpan period, DeferredUpdate update)
+        {
+            return Scheduler.Schedule(dueTime.TotalSeconds, period.TotalSeconds, update).DisposeWith(this);
+        }
+
+        protected void Unschedule(DeferredUpdate update)
+        {
+            Scheduler.Unschedule(update);
+        }
+
+        #endregion Scheduler
     }
 }

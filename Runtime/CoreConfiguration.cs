@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Mirzipan.Framed
 {
+    [CreateAssetMenu(fileName = "NewCoreConfiguration", menuName = "Framed/Core Configuration", order = 1000)]
     public class CoreConfiguration: ScriptableObject, IConfiguration
     {
         public bool IsEnabled => true;

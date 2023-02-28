@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Mirzipan.Bibliotheca.Disposables;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion.Meta;
@@ -23,14 +24,13 @@ namespace Mirzipan.Framed.Unity
 
         #region Lifecycle
 
-        protected virtual void Start()
+        protected virtual IEnumerator Start()
         {
             OnCoreLoading();
             
-            // TODO: wait for core if not loaded yet
             if (Core.Instance.IsLoading)
             {
-                return;
+                yield break;
             }
 
             OnCoreLoaded();

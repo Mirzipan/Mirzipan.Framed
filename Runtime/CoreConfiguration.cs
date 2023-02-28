@@ -1,6 +1,4 @@
-﻿using Mirzipan.Framed.Definitions;
-using Mirzipan.Framed.Localization;
-using Mirzipan.Framed.Models;
+﻿using Mirzipan.Framed.Scenes;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion;
 using UnityEngine;
@@ -16,9 +14,7 @@ namespace Mirzipan.Framed
         {
             // TODO: move this somewhere else still
             container.Bind(new SchedulerModule());
-            container.Bind(new DefinitionModule());
-            container.Bind(new LocalizationModule());
-            container.Bind(new ModelModule());
+            container.Bind(new SceneManagement());
         }
     }
 }

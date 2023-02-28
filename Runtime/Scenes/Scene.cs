@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using Mirzipan.Framed.Exceptions;
 using Mirzipan.Framed.Modules;
-using Mirzipan.Framed.Scenes;
+using Mirzipan.Framed.Unity;
 using Mirzipan.Infusion;
 
-namespace Mirzipan.Framed.Unity
+namespace Mirzipan.Framed.Scenes
 {
-    public class Scene: FramedBehaviour, IModuleContainer
+    public class Scene: FramedBehaviour, IModuleContainer, IScene
     {
         private readonly Dictionary<Type, SceneModule> _modulesByType = new();
         private InjectionContainer _container;
 
         private CoreState _state;
-        private IConfiguration _configuration;
+        private IConfiguration _configuration; // TODO: make make a specific ISceneConfiguration
 
         public string Name { get; set; }
         public IInjectionContainer Container => _container;

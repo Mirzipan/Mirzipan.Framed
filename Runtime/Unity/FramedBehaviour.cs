@@ -30,7 +30,7 @@ namespace Mirzipan.Framed.Unity
             
             if (Core.Instance.IsLoading)
             {
-                yield break;
+                yield return null;
             }
 
             OnCoreLoaded();

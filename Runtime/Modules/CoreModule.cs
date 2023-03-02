@@ -79,27 +79,27 @@ namespace Mirzipan.Framed.Modules
         
         #region Scheduler
 
-        protected IDisposable Schedule(double dueTime, DeferredUpdate update)
+        protected IDisposable AddUpdate(double dueTime, DeferredUpdate update)
         {
             return Scheduler.Schedule(dueTime, update).DisposeWith(this);
         }
 
-        protected IDisposable Schedule(double dueTime, double period, DeferredUpdate update)
+        protected IDisposable AddUpdate(double dueTime, double period, DeferredUpdate update)
         {
             return Scheduler.Schedule(dueTime, period, update).DisposeWith(this);
         }
 
-        protected IDisposable Schedule(TimeSpan dueTime, DeferredUpdate update)
+        protected IDisposable AddUpdate(TimeSpan dueTime, DeferredUpdate update)
         {
             return Scheduler.Schedule(dueTime.TotalSeconds, update).DisposeWith(this);
         }
 
-        protected IDisposable Schedule(TimeSpan dueTime, TimeSpan period, DeferredUpdate update)
+        protected IDisposable AddUpdate(TimeSpan dueTime, TimeSpan period, DeferredUpdate update)
         {
             return Scheduler.Schedule(dueTime.TotalSeconds, period.TotalSeconds, update).DisposeWith(this);
         }
 
-        protected void Unschedule(DeferredUpdate update)
+        protected void RemoveUpdate(DeferredUpdate update)
         {
             Scheduler.Unschedule(update);
         }

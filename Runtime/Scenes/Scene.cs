@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mirzipan.Framed.Configurations;
 using Mirzipan.Framed.Exceptions;
 using Mirzipan.Framed.Modules;
 using Mirzipan.Framed.Unity;
 using Mirzipan.Infusion;
+using UnityEngine;
 
 namespace Mirzipan.Framed.Scenes
 {
@@ -13,42 +15,20 @@ namespace Mirzipan.Framed.Scenes
         private InjectionContainer _container;
 
         private CoreState _state;
-        private IConfiguration _configuration; // TODO: make make a specific ISceneConfiguration
+        [SerializeField]
+        private ConfigurationContext _configurationContext;
 
         public string Name { get; set; }
         public IInjectionContainer Container => _container;
         public CoreState State => _state;
+        public ConfigurationContext ConfigurationContext => _configurationContext;
 
         #region Lifecycle
 
         protected override void OnCoreLoaded()
         {
-            _container = new InjectionContainer(Core.Instance.Container);
-            _container.Bind(typeof(IInjectionContainer), _container);
-
-            _configuration?.AddBindings(_container);
-
-            _container.InjectAll();
-            
-            var modules = new List<SceneModule>();
-            modules.AddRange(_container.ResolveAll<SceneModule>());
-            int count = modules.Count;
-            
-            for (int i = 0; i < count; i++)
-            {
-                SceneModule entry = modules[i];
-                _modulesByType[entry.GetType()] = entry;
-            }            
-            
-            for (var i = 0; i < count; i++)
-            {
-                modules[i].Init(this);
-            }
-
-            for (var i = 0; i < count; i++)
-            {
-                modules[i].Load();
-            }
+            InitContainer();
+            InitModules();
         }
 
         #endregion Lifecycle
@@ -71,5 +51,45 @@ namespace Mirzipan.Framed.Scenes
 
         #endregion Queries
 
+        #region Private
+
+        private void InitContainer()
+        {
+            _container = new InjectionContainer(Core.Instance.Container);
+            _container.Bind(typeof(IInjectionContainer), _container);
+
+            if (_configurationContext)
+            {
+                _container.Inject(_configurationContext);
+                _configurationContext.AddBindings();
+            }
+
+            _container.InjectAll();
+        }
+
+        private void InitModules()
+        {
+            var modules = new List<SceneModule>();
+            modules.AddRange(_container.ResolveAll<SceneModule>());
+            int count = modules.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                SceneModule entry = modules[i];
+                _modulesByType[entry.GetType()] = entry;
+            }
+
+            for (var i = 0; i < count; i++)
+            {
+                modules[i].Init(this);
+            }
+
+            for (var i = 0; i < count; i++)
+            {
+                modules[i].Load();
+            }
+        }
+
+        #endregion Private
     }
 }

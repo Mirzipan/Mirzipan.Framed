@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mirzipan.Bibliotheca.Unity;
+using Mirzipan.Framed.Configurations;
 using Mirzipan.Framed.Exceptions;
 using Mirzipan.Framed.Modules;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mirzipan.Framed
 {
@@ -19,7 +21,7 @@ namespace Mirzipan.Framed
         private SchedulerModule _scheduler;
 
         [SerializeField]
-        private CoreConfiguration _configuration;
+        private ConfigurationContext _configurationContext;
 
         public CoreState State => _state;
         public bool IsLoading => _state == CoreState.Loading;
@@ -36,7 +38,7 @@ namespace Mirzipan.Framed
             _state = CoreState.Loading;
 
             // TODO: async
-            InitInternals(_configuration);
+            InitInternals();
 
             _state = CoreState.Loaded;
         }
@@ -76,30 +78,38 @@ namespace Mirzipan.Framed
 
         #region Private
 
-        private void InitInternals(CoreConfiguration configuration)
+        private void InitInternals()
+        {
+            InitContainer();
+            InitModules();
+        }
+
+        private void InitContainer()
         {
             _container = new InjectionContainer();
             _container.Bind(typeof(IInjectionContainer), _container);
-            
-            if (configuration)
+
+            if (_configurationContext)
             {
-                configuration.AddBindings(_container);
+                _container.Inject(_configurationContext);
+                _configurationContext.AddBindings();
             }
-            
-            // TODO: maybe look for extra IConfigurations on GO and in SO (add execution order?)
 
             _container.InjectAll();
-            
+        }
+
+        private void InitModules()
+        {
             var modules = new List<CoreModule>();
             modules.AddRange(_container.ResolveAll<CoreModule>());
             int count = modules.Count;
-            
+
             for (int i = 0; i < count; i++)
             {
                 CoreModule entry = modules[i];
                 _modulesByType[entry.GetType()] = entry;
-            }            
-            
+            }
+
             for (var i = 0; i < count; i++)
             {
                 modules[i].Init(this);

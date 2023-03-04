@@ -1,7 +1,11 @@
 # Changelog
 
-## [1.0.0] - 2023-02-13
+## [0.0.1] - 2023-03-04
+Very early preview version
 
 ### Added
-- Core
-- FramedBehaviour
+- Core (the brains of the operation that has to always be loaded first)
+- Configurations (MonoBehaviours, ScriptableObjects and regular C# classes) for injection
+- FramedBehaviour (Base behaviour to be used for injection)
+- Module generic type for use in anything modular
+- Scene (WIP)

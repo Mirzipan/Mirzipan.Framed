@@ -33,9 +33,10 @@ namespace Mirzipan.Framed.Unity
                 yield return null;
             }
 
-            OnCoreLoaded();
-            
+            // TODO: this should also work with more limited scopes later
             Core.Instance.Container.Inject(this);
+            
+            OnCoreLoaded();
         }
 
         protected void OnDestroy()

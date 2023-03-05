@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1-alpha.2] - 2023-03-05
+
+### Added
+- OnGameReady method for FramedBehaviour
+
 ## [1.0.1-alpha] - 2023-03-05
 
 ### Fixed

@@ -37,6 +37,10 @@ namespace Mirzipan.Framed.Unity
             Core.Instance.Container.Inject(this);
             
             OnCoreLoaded();
+
+            yield return new WaitForEndOfFrame();
+
+            OnGameReady();
         }
 
         protected void OnDestroy()
@@ -48,14 +52,27 @@ namespace Mirzipan.Framed.Unity
 
         #region Loading
 
+        /// <summary>
+        /// Called before we wait for the core loading.
+        /// </summary>
         protected virtual void OnCoreLoading()
         {
             
         }
 
+        /// <summary>
+        /// First method to be called once the core has finished loading.
+        /// </summary>
         protected virtual void OnCoreLoaded()
         {
             
+        }
+
+        /// <summary>
+        /// Called when all bindings have been resolved.
+        /// </summary>
+        protected virtual void OnGameReady()
+        {
         }
 
         #endregion Loading

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Mirzipan.Framed.Configurations;
 using Mirzipan.Framed.Exceptions;
 using Mirzipan.Framed.Modules;
-using Mirzipan.Framed.Unity;
 using Mirzipan.Infusion;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 namespace Mirzipan.Framed.Scenes
 {
-    public class Scene: FramedBehaviour, IModuleContainer, IScene
+    public class Scene: MonoBehaviour, IModuleContainer, IScene
     {
         private readonly Dictionary<Type, SceneModule> _modulesByType = new();
         private InjectionContainer _container;
@@ -25,10 +26,27 @@ namespace Mirzipan.Framed.Scenes
 
         #region Lifecycle
 
-        protected override void OnCoreLoaded()
+        public void Init(IInjectionContainer parent)
         {
-            InitContainer();
+            _state = CoreState.Loading;
+            
+            InitContainer(parent);
             InitModules();
+
+            _state = CoreState.Loaded;
+        }
+
+        public void Unload()
+        {
+            _state = CoreState.Unloading;
+
+            using var obj = ListPool<SceneModule>.Get(out var modules);
+            modules.AddRange(_container.ResolveAll<SceneModule>());
+            int count = modules.Count;
+            for (var i = 0; i < count; i++)
+            {
+                modules[i].Unload();
+            }
         }
 
         #endregion Lifecycle
@@ -53,7 +71,7 @@ namespace Mirzipan.Framed.Scenes
 
         #region Private
 
-        private void InitContainer()
+        private void InitContainer(IInjectionContainer parent)
         {
             _container = new InjectionContainer(Core.Instance.Container);
             _container.Bind(typeof(IInjectionContainer), _container);
@@ -69,7 +87,7 @@ namespace Mirzipan.Framed.Scenes
 
         private void InitModules()
         {
-            var modules = new List<SceneModule>();
+            using var obj = ListPool<SceneModule>.Get(out var modules);
             modules.AddRange(_container.ResolveAll<SceneModule>());
             int count = modules.Count;
 

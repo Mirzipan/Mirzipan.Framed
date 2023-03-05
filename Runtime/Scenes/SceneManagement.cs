@@ -16,6 +16,8 @@ namespace Mirzipan.Framed.Scenes
 
         protected override void OnInit()
         {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         #endregion Lifecycle
@@ -24,12 +26,22 @@ namespace Mirzipan.Framed.Scenes
 
         public void LoadScene(string name)
         {
-            
+            var scene = SceneManager.GetSceneByName(name);
+            if (!scene.IsValid())
+            {
+                Debug.LogError($"Scene with name `{name}` not found.");
+                return;
+            }
+
+            SceneManager.LoadSceneAsync(scene.buildIndex, LoadSceneMode.Additive);
         }
 
         public void UnloadScene(string name)
         {
-            
+            if (_scenesByName.TryGetValue(name, out var scene))
+            {
+                UnloadScene(scene);
+            }
         }
 
         public void UnloadScene(IScene scene)
@@ -44,7 +56,7 @@ namespace Mirzipan.Framed.Scenes
         private void UnloadSceneAsync(IScene scene)
         {
             _loadedScenes.Remove(scene);
-            // TODO: set state to unloading
+            scene.Unload();
             
             var unloadAsync = SceneManager.UnloadSceneAsync(((MonoBehaviour)scene).gameObject.scene);
             if (unloadAsync.isDone)
@@ -62,5 +74,37 @@ namespace Mirzipan.Framed.Scenes
         }
 
         #endregion Private
+
+        #region Bindings
+
+        private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+        {
+            var roots = scene.GetRootGameObjects();
+
+            int index = 0;
+            Scene framedScene = null;
+            while (!framedScene && index < roots.Length)
+            {
+                GameObject root = roots[index];
+                framedScene = root.GetComponent<Scene>();
+                ++index;
+            }
+
+            if (!framedScene)
+            {
+                return;
+            }
+
+            _scenesByName[scene.name] = framedScene;
+            _loadedScenes.Add(framedScene);
+            framedScene.Init(Core.Instance.Container);
+        }
+
+        private void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene)
+        {
+            _scenesByName.Remove(scene.name);
+        }
+
+        #endregion Bindings
     }
 }

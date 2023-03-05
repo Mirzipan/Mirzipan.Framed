@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.3] - 2023-03-05
+
+### Fixed
+- Unintentional behaviour injection after core loaded callback
+
 ## [0.0.2] - 2023-03-04
 
 ### Fixed

@@ -1,7 +1,7 @@
 {
   "name": "net.mirzipan.framed",
   "displayName": "Mirzipan Framed",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "unity": "2021.3",
   "description": "A basic framework for an application or a game in Unity",
   "author": {

@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1-alpha] - 2023-03-05
+
+### Fixed
+- Version number again, it seems we cannot go back to pre-1.0.0
+
 ## [0.0.3] - 2023-03-05
 
 ### Fixed

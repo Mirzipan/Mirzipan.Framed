@@ -1,4 +1,5 @@
-﻿using Mirzipan.Framed.Scenes;
+﻿using Mirzipan.Framed.Modules;
+using Mirzipan.Framed.Scenes;
 using Mirzipan.Framed.Scheduler;
 using Mirzipan.Infusion;
 using Mirzipan.Infusion.Meta;
@@ -16,8 +17,13 @@ namespace Mirzipan.Framed.Configurations
 
         public override void AddBindings()
         {
-            _container.Bind(new SchedulerModule());
-            _container.Bind(new SceneManagement());
+            var scheduler = new SchedulerModule();
+            _container.Bind(scheduler);
+            _container.Bind<CoreModule>(scheduler, "scheduler");
+
+            var scenes = new ScenesModule();
+            _container.Bind(scenes);
+            _container.Bind<CoreModule>(scenes, "scenes");
         }
     }
 }

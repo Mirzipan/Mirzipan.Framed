@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Mirzipan.Framed.Scenes
 {
-    public class SceneManagement: CoreModule
+    public class ScenesModule: CoreModule
     {
         private readonly Dictionary<string, IScene> _scenesByName = new();
         private readonly List<IScene> _loadedScenes = new();

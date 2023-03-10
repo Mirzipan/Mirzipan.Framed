@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1-alpha.3] - 2023-03-10
+
+### Fixed
+- CoreConfiguration now properly registers its modules
+
 ## [1.0.1-alpha.2] - 2023-03-05
 
 ### Added

@@ -23,7 +23,7 @@ namespace Mirzipan.Framed.Configurations
                 return -1;
             }
 
-            return x.Priority.CompareTo(y.Priority);
+            return -x.Priority.CompareTo(y.Priority);
         }
     }
 }

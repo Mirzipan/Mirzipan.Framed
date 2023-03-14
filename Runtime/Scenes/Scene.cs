@@ -73,16 +73,17 @@ namespace Mirzipan.Framed.Scenes
 
         private void InitContainer(IInjectionContainer parent)
         {
-            _container = new InjectionContainer(Core.Instance.Container);
-            _container.Bind(typeof(IInjectionContainer), _container);
+            _container = parent.CreateChild(Name) as InjectionContainer;
+            if (_container == null)
+            {
+                return;
+            }
 
             if (_configurationContext)
             {
                 _container.Inject(_configurationContext);
                 _configurationContext.AddBindings();
             }
-
-            _container.InjectAll();
         }
 
         private void InitModules()

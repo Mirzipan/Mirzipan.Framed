@@ -86,16 +86,13 @@ namespace Mirzipan.Framed
 
         private void InitContainer()
         {
-            _container = new InjectionContainer();
-            _container.Bind(typeof(IInjectionContainer), _container);
+            _container = new InjectionContainer("CoreContainer");
 
             if (_configurationContext)
             {
                 _container.Inject(_configurationContext);
                 _configurationContext.AddBindings();
             }
-
-            _container.InjectAll();
         }
 
         private void InitModules()

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1-alpha.4] - 2023-03-14
+
+### Changed
+- now using the 2.X series of Infusion
+
+### Fixed
+- critical issue with wrong configuration sorting
+
 ## [1.0.1-alpha.3] - 2023-03-10
 
 ### Fixed

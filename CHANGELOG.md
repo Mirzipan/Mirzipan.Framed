@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0-alpha.1] - 2023-04-16
+
+### Added
+- DefinitionsConfiguration
+- SchedulerConfiguration
+- FramedBehaviour now has Ticker
+- FramedScheduler for ticking Ticker and Updater
+
+### Changed
+- CoreConfiguration renamed to CoreInstaller
+- Swapped Mirzipan.Infusion for Reflex for dependency injection
+
+### Removed
+- Module and its variants (Module, SceneModule, CoreModule) - basic modules now live in Bibliotheca
+- Scene
+- Core (and CoreState)
+- Configuration and its variants (component, scriptable object, class, etc.)
+
 ## [1.0.1-alpha.4] - 2023-03-14
 
 ### Changed

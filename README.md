@@ -5,47 +5,35 @@
 A basic framework for an application or a game in Unity. Contains basic QoL improvements.
 Currently there is only a preview version and it is not advisable to use it for anything outside testing.
 
-## Core
+It is using [Reflex](https://github.com/gustavopsantos/Reflex) for dependency injection.
 
-Main brain of the operation. This is a singleton, therefore it is accessible from everywhere.
+## Getting Started
 
-### Core Module
+The setup is very similar to *Reflex*.
 
-Modules that represent systems, services, or other mechanics that need to exist game-wide.
+### Core
+1. Open a `Resources` folder.
+2. Create a prefab named `ProjectContext`and attach the `ProjectContext` component to it. Or just use the context menu to do it for you.
+3. Attach the `CoreInstaller` component to the aforementioned prefab.
+4. Create `SchedulerConfiguration` asset and assign it to `CoreInstaller`.
+5. Create `DefinitionsConfiguration` asset and assign it to `CoreInstaller`.
 
-## Scene
+### Scene
+1. Open your starting scene.
+2. Create a new GameObject and attach `FramedScheduler` component to it.
 
-A MonoBehaviour that represents the root of the scene.
+## Contents
 
-### Scene Module
+### Core Installer
 
-Modules that represent systems, services, or other mechanics that need to exist within a scene.
+This will take care of the basic configuration of Framed. 
+Currently, it adds `Updater`, `Ticker`, and `Definitions`.
 
-## Configuration Context
+## Framed Scheduler
 
-A group of configurations to be used for priming injection containers.
-You should create your own child classes of any of the provided base implementations.
-All enabled configurations are resolved in order from the **highest to lowest** priority.
+A singleton that makes sure that `Updater` and `Tick` receive ticks.
 
-### IConfiguration
+## Framed Behaviour
 
-```csharp
-public interface IConfiguration
-{
-    bool IsEnabled { get; }
-    int Priority { get; }
-    void AddBindings();
-}
-```
-
-### Configuration
-
-A simple C# class that implements `IConfiguration` interface.
-
-### Configuration Component
-
-A MonoBehaviour that implements `IConfiguration` interface.
-
-### Configuration Scriptable Object
-
-A ScriptableObjects that implements `IConfiguration` interface.
+A base behaviour for Framed.
+It is not necessary to use it, but it does come with a bunch of quality of life improvements over the Unity `MonoBehaviour`.

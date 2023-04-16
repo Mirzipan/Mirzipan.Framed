@@ -2,10 +2,11 @@
     "name": "Mirzipan.Framed",
     "rootNamespace": "",
     "references": [
-        "Mirzipan.Extensions",
         "Mirzipan.Bibliotheca",
+        "Mirzipan.Clues",
+        "Mirzipan.Extensions",
         "Mirzipan.Scheduler",
-        "Mirzipan.Infusion"
+        "Reflex"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

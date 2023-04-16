@@ -5,7 +5,12 @@
 A basic framework for an application or a game in Unity. Contains basic QoL improvements.
 Currently there is only a preview version and it is not advisable to use it for anything outside testing.
 
-It is using [Reflex](https://github.com/gustavopsantos/Reflex) for dependency injection.
+Used libraries:
+* [Reflex](https://github.com/gustavopsantos/Reflex) for dependency injection.
+* [Mirzipan.Bibliotheca](https://github.com/Mirzipan/Mirzipan.Bibliotheca) for extra types, such as `CompositeDisposable`.
+* [Mirzipan.Clues](https://github.com/Mirzipan/Mirzipan.Clues) for data-driven workflows.
+* [Mirzipan.Extensions](https://github.com/Mirzipan/Mirzipan.Extensions) for convenience.
+* [Mirzipan.Scheduler](https://github.com/Mirzipan/Mirzipan.Scheduler) for scheduler and fixed callbacks.
 
 ## Getting Started
 

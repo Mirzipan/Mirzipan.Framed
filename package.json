@@ -1,7 +1,7 @@
 {
   "name": "net.mirzipan.framed",
   "displayName": "Mirzipan Framed",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.1-alpha.1",
   "unity": "2021.3",
   "description": "A basic framework for an application or a game in Unity",
   "author": {
@@ -21,6 +21,6 @@
     "net.mirzipan.bibliotheca" : "1.3.2",
     "net.mirzipan.extensions" : "1.3.3",
     "net.mirzipan.scheduler" : "1.2.0",
-    "net.mirzipan.clues" : "2.0.0"
+    "net.mirzipan.clues" : "2.1.0"
   }
 }

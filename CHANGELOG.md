@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.1-alpha.2] - 2023-04-17
+
+### Fixed
+- removed reference to non-existent type in CoreInstaller 
+
 ## [2.0.1-alpha.1] - 2023-04-16
 
 ### Changed

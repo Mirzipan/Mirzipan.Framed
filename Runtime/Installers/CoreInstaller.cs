@@ -24,8 +24,9 @@ namespace Mirzipan.Framed.Installers
             var definitions = new Definitions();
             definitions.LoadAtPath(_definitions.PathToLoadFrom);
             descriptor.AddInstance(definitions, definitions.GetType(), typeof(IDefinitions));
-            
-            DefinitionsView.Target = definitions;
+
+            // var commandProcessor = new LocalCommandProcessor();
+            // descriptor.AddInstance(commandProcessor);
         }
     }
 }

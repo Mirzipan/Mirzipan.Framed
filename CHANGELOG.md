@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2] - 2023-04-30
+
+### Added
+- Extension methods for instance injection
+
+### Changed
+- Updated Reflex to 4.1.1
+
 ## [2.0.1-alpha.2] - 2023-04-17
 
 ### Fixed

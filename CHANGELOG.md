@@ -1,9 +1,11 @@
 # Changelog
 
-## [2.0.2] - 2023-04-30
+## [2.1.0] - 2023-04-30
 
 ### Added
-- Extension methods for instance injection
+- Extension methods for object and Component injection
+- Extension method for singleton binding 
+- Added Heist 1.0.0
 
 ### Changed
 - Updated Reflex to 4.1.1

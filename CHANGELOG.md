@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.1] - 2023-04-30
+
+### Fixed
+- Nullref if no contracts are provided for AddSingletonAsSelf
+
 ## [2.1.0] - 2023-04-30
 
 ### Added

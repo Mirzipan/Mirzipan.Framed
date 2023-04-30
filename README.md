@@ -10,6 +10,7 @@ Used libraries:
 * [Mirzipan.Bibliotheca](https://github.com/Mirzipan/Mirzipan.Bibliotheca) for extra types, such as `CompositeDisposable`.
 * [Mirzipan.Clues](https://github.com/Mirzipan/Mirzipan.Clues) for data-driven workflows.
 * [Mirzipan.Extensions](https://github.com/Mirzipan/Mirzipan.Extensions) for convenience.
+* [Mirzipan.Heist](https://github.com/Mirzipan/Mirzipan.Heist) for command pattern.
 * [Mirzipan.Scheduler](https://github.com/Mirzipan/Mirzipan.Scheduler) for scheduler and fixed callbacks.
 
 ## Getting Started

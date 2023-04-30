@@ -7,7 +7,12 @@ namespace Mirzipan.Framed.Extensions
     {
         public static ContainerDescriptor AddSingletonAsSelf(this ContainerDescriptor @this, Type type, params Type[] contracts)
         {
-            Array.Resize(ref contracts, contracts.Length + 1);
+            if (contracts == null)
+            {
+                return @this.AddSingleton(type);
+            }
+            
+            Array.Resize(ref contracts, contracts.Length);
             contracts[^1] = type;
             @this.AddSingleton(type, contracts);
             return @this;

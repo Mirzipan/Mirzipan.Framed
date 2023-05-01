@@ -43,3 +43,6 @@ A singleton that makes sure that `Updater` and `Tick` receive ticks.
 
 A base behaviour for Framed.
 It is not necessary to use it, but it does come with a bunch of quality of life improvements over the Unity `MonoBehaviour`.
+Namely integrations for:
+* Heist
+* Scheduler (both, Ticker and Updater)

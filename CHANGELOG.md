@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.2.0] - 2023-05-01
+
+### Added
+- AddSingletonAsInterfaces and AddSingletonAsInterfacesAndSelf
+- Validate and Process for IAction in FramedBehaviour
+
+### Fixed
+- array not being resized correctly in AddSingletonAsSelf
+
 ## [2.1.1] - 2023-04-30
 
 ### Fixed

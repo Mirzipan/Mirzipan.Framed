@@ -12,7 +12,7 @@ namespace Mirzipan.Framed.Extensions
                 return @this.AddSingleton(type);
             }
             
-            Array.Resize(ref contracts, contracts.Length);
+            Array.Resize(ref contracts, contracts.Length + 1);
             contracts[^1] = type;
             @this.AddSingleton(type, contracts);
             return @this;

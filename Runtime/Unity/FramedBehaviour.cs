@@ -1,5 +1,7 @@
 ﻿using System;
 using Mirzipan.Bibliotheca.Disposables;
+using Mirzipan.Heist.Commands;
+using Mirzipan.Heist.Processors;
 using Mirzipan.Scheduler;
 using Reflex.Attributes;
 using UnityEngine;
@@ -11,7 +13,9 @@ namespace Mirzipan.Framed.Unity
     public class FramedBehaviour: MonoBehaviour, IDisposerContainer
     {
         private CompositeDisposable _disposer;
-        
+
+        [Inject]
+        protected readonly IClientProcessor Client;
         [Inject]
         protected readonly Updater Updater;
         [Inject]
@@ -31,6 +35,20 @@ namespace Mirzipan.Framed.Unity
         }
 
         #endregion Lifecycle
+
+        #region Client
+
+        protected ValidationResult Validate(IAction action)
+        {
+            return Client.Validate(action);
+        }
+
+        protected void Process(IAction action)
+        {
+            Client.Process(action);
+        }
+
+        #endregion Client
 
         #region Updater
 

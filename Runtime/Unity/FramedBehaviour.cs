@@ -1,6 +1,6 @@
 ﻿using System;
 using Mirzipan.Bibliotheca.Disposables;
-using Mirzipan.Heist.Commands;
+using Mirzipan.Heist;
 using Mirzipan.Heist.Processors;
 using Mirzipan.Scheduler;
 using Reflex.Attributes;
@@ -36,7 +36,7 @@ namespace Mirzipan.Framed.Unity
 
         #endregion Lifecycle
 
-        #region Client
+        #region Command Processor
 
         protected ValidationResult Validate(IAction action)
         {
@@ -48,7 +48,7 @@ namespace Mirzipan.Framed.Unity
             Client.Process(action);
         }
 
-        #endregion Client
+        #endregion Command Processor
 
         #region Updater
 

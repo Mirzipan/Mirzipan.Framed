@@ -1,8 +1,9 @@
 ﻿using Mirzipan.Framed.Configuration;
+using Mirzipan.Framed.Extensions;
 using Reflex.Core;
 using UnityEngine;
 
-namespace Mirzipan.Framed.Reflex
+namespace Mirzipan.Framed
 {
     public class CoreInstaller : MonoBehaviour, IInstaller
     {

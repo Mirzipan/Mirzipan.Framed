@@ -1,11 +1,18 @@
 ﻿using System;
+using Mirzipan.Clues;
 using Mirzipan.Extensions.Collections;
+using Mirzipan.Framed.Configuration;
+using Mirzipan.Framed.Reactive;
+using Mirzipan.Scheduler;
 using Reflex.Core;
+using UnityEngine;
 
 namespace Mirzipan.Framed.Extensions
 {
     public static class ContainerDescriptorExtensions
     {
+        #region General
+
         public static ContainerDescriptor AddSingletonAsSelf(this ContainerDescriptor @this, Type type, params Type[] contracts)
         {
             if (contracts == null)
@@ -41,5 +48,35 @@ namespace Mirzipan.Framed.Extensions
             
             return @this.AddSingleton(type, interfaces);
         }
+
+        #endregion General
+
+        #region Specific
+
+        public static ContainerDescriptor AddScheduler(this ContainerDescriptor @this,
+            SchedulerConfiguration configuration)
+        {
+            double frameBudget = 1d / Mathf.Max(Application.targetFrameRate, 30) * configuration.FrameBudgetPercentage;
+            var scheduler = new Updater(frameBudget);
+            @this.AddInstance(scheduler);
+            
+            var ticker = new Ticker();
+            return @this.AddInstance(ticker);
+        }
+
+        public static ContainerDescriptor AddDefinitions(this ContainerDescriptor @this,
+            DefinitionsConfiguration configuration)
+        {
+            var definitions = new Definitions();
+            definitions.LoadAtPath(configuration.PathToLoadFrom);
+            return @this.AddInstance(definitions, typeof(Definitions), typeof(IDefinitions));
+        }
+        
+        public static ContainerDescriptor AddReactiveSystems(this ContainerDescriptor @this)
+        {
+            return @this.AddSingleton(typeof(ReactiveSystems));
+        }
+
+        #endregion Specific
     }
 }

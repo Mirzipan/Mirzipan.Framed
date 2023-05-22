@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mirzipan.Framed.Installers
+namespace Mirzipan.Framed.Configuration
 {
     [CreateAssetMenu(fileName = "SchedulerConfiguration", menuName = "Framed/Scheduler Configuration", order = 10000)]
     public class SchedulerConfiguration : ScriptableObject

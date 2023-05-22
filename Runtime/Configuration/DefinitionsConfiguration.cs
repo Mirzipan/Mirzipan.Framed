@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mirzipan.Framed.Installers
+namespace Mirzipan.Framed.Configuration
 {
     [CreateAssetMenu(fileName = "DefinitionsConfiguration", menuName = "Framed/Definitions Configuration", order = 10010)]
     public class DefinitionsConfiguration : ScriptableObject

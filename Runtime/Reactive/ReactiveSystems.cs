@@ -10,7 +10,8 @@ namespace Mirzipan.Framed.Reactive
 {
     internal sealed class ReactiveSystems : IStartable, IDisposable
     {
-        private IReactToCommand[] _systems;
+        private IReactToAction[] _actions;
+        private IReactToCommand[] _commands;
 
         [Inject]
         private Container _container;
@@ -21,14 +22,17 @@ namespace Mirzipan.Framed.Reactive
 
         public void Start()
         {
-            _systems = _container.All<IReactToCommand>().OrderBy(e => e.Priority, false).ToArray();
+            _actions = _container.All<IReactToAction>().OrderBy(e => e.Priority, false).ToArray();
+            _commands = _container.All<IReactToCommand>().OrderBy(e => e.Priority, false).ToArray();
                
+            _processor.OnActionProcessed += OnActionProcessed;
             _processor.OnCommandExecuted += OnCommandExecuted;
         }
 
         public void Dispose()
         {
             _container = null;
+            _processor.OnActionProcessed -= OnActionProcessed;
             _processor.OnCommandExecuted -= OnCommandExecuted;
             _processor = null;
         }
@@ -37,11 +41,20 @@ namespace Mirzipan.Framed.Reactive
 
         #region Bindings
 
+        private void OnActionProcessed(IAction action)
+        {
+            for (var i = 0; i < _actions.Length; i++)
+            {
+                IReactToAction entry = _actions[i];
+                entry.ReactTo(action);
+            }
+        }
+
         private void OnCommandExecuted(ICommand command)
         {
-            for (var i = 0; i < _systems.Length; i++)
+            for (var i = 0; i < _commands.Length; i++)
             {
-                IReactToCommand entry = _systems[i];
+                IReactToCommand entry = _commands[i];
                 entry.ReactTo(command);
             }
         }

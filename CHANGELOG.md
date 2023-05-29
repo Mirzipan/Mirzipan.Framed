@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.0-alpha.2] - 2023-05-29
+
+### Change
+- Split Heist-related bindings into HeistInstaller
+
+### Fixed
+- wrong name of parameter in IReactToAction
+
 ## [3.0.0-alpha.1] - 2023-05-29
 
 ### Added

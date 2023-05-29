@@ -28,15 +28,19 @@ The setup is very similar to *Reflex*.
 1. Open your starting scene.
 2. Create a new GameObject and attach `FramedScheduler` component to it.
 
+### Optional
+1. Add `HeistInstaller` to either your Core or Scene, if you wish to use actions and commands.
+
 ## Contents
 
 ### Core Installer
-
 This will take care of the basic configuration of Framed. 
 Currently, it adds:
 * `Updater` and `Ticker` from Scheduler
 * `Definitions` from Clues
-* `ClientProcessor`, `ServerProcessor` and their dependencies from Heist
+
+### Heist Installer
+Adds `ClientProcessor`, `ServerProcessor` to allow working with actions and commands.
 
 ## Framed Scheduler
 
@@ -49,3 +53,34 @@ It is not necessary to use it, but it does come with a bunch of quality of life 
 Namely integrations for:
 * Heist
 * Scheduler (both, Ticker and Updater)
+
+### Reactive Systems
+You may choose to react to actions being processed and commands being executed.
+In both cases, it's enough to just implement the relevant interface.
+All your types that implement these interfaces need to be registered in container as these instances.
+Upon `ReactiveSystems` injection, all implementors will be resolved and sorted according to priority.
+This means that even if your reactive system implements `Priority` in some dynamic way, keep in mind that the sorting will only ever happen at the start, therefore any subsequent changes to `Priority` will be ignored.
+
+#### Actions
+To react to an action after it has been processed, implement `IReactToAction`.
+```csharp
+public interface IReactToAction
+{
+    int Priority { get; }
+    void ReactTo(IAction action);
+}
+```
+* `Priority` - higher number means this gets called sooner.
+* `ReactTo(action)` - gets called after an action was processed.
+
+#### Commands
+To react to an action after it has been processed, implement `IReactToCommand`.
+```csharp
+public interface IReactToCommand
+{
+    int Priority { get; }
+    void ReactTo(ICommand command);
+}
+```
+* `Priority` - higher number means this gets called sooner.
+* `ReactTo(command)` - gets called after a command was executed.

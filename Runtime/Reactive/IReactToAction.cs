@@ -5,6 +5,6 @@ namespace Mirzipan.Framed.Reactive
     public interface IReactToAction
     {
         int Priority { get; }
-        void ReactTo(IAction command);
+        void ReactTo(IAction action);
     }
 }

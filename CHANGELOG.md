@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.0-alpha.1] - 2023-05-29
+
+### Added
+- ReactiveSystems that may react to actions and commands
+
+### Changed
+- Updated Heist to 5.2.0
+- Changed how CoreInstaller works
+
 ## [2.2.0] - 2023-05-01
 
 ### Added

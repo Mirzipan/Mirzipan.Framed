@@ -33,7 +33,10 @@ The setup is very similar to *Reflex*.
 ### Core Installer
 
 This will take care of the basic configuration of Framed. 
-Currently, it adds `Updater`, `Ticker`, and `Definitions`.
+Currently, it adds:
+* `Updater` and `Ticker` from Scheduler
+* `Definitions` from Clues
+* `ClientProcessor`, `ServerProcessor` and their dependencies from Heist
 
 ## Framed Scheduler
 

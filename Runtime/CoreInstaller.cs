@@ -1,5 +1,6 @@
 ﻿using Mirzipan.Framed.Configuration;
 using Mirzipan.Framed.Extensions;
+using Mirzipan.Heist.Reflex;
 using Reflex.Core;
 using UnityEngine;
 
@@ -16,6 +17,12 @@ namespace Mirzipan.Framed
         {
             descriptor.AddScheduler(_scheduler);
             descriptor.AddDefinitions(_definitions);
+
+            descriptor.AddMetadataIndexers();
+            descriptor.AddLoopbackQueue();
+            descriptor.AddClientProcessor();
+            descriptor.AddServerProcessor();
+
             descriptor.AddReactiveSystems();
         }
     }

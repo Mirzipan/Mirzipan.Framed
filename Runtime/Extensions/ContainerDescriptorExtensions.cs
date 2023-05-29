@@ -49,6 +49,32 @@ namespace Mirzipan.Framed.Extensions
             return @this.AddSingleton(type, interfaces);
         }
 
+        public static ContainerDescriptor AddInstanceAsInterfacesAndSelf(this ContainerDescriptor @this, object instance)
+        {
+            var type = instance.GetType();
+            var interfaces = type.GetInterfaces();
+            if (interfaces.IsNullOrEmpty())
+            {
+                return @this.AddInstance(instance);
+            }
+            
+            Array.Resize(ref interfaces, interfaces.Length + 1);
+            interfaces[^1] = type;
+            return @this.AddInstance(instance, interfaces);
+        }
+
+        public static ContainerDescriptor AddInstanceAsInterfaces(this ContainerDescriptor @this, object instance)
+        {
+            var type = instance.GetType();
+            var interfaces = type.GetInterfaces();
+            if (interfaces.IsNullOrEmpty())
+            {
+                return @this.AddInstance(instance);
+            }
+            
+            return @this.AddInstance(instance, interfaces);
+        }
+
         #endregion General
 
         #region Specific

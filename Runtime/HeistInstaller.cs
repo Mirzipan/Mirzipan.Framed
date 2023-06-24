@@ -17,5 +17,9 @@ namespace Mirzipan.Framed
 
             descriptor.AddReactiveSystems();
         }
+
+        public void OnContainerBuilt(Container container)
+        {
+        }
     }
 }

@@ -17,5 +17,9 @@ namespace Mirzipan.Framed
             descriptor.AddScheduler(_scheduler);
             descriptor.AddDefinitions(_definitions);
         }
+
+        public void OnContainerBuilt(Container container)
+        {
+        }
     }
 }

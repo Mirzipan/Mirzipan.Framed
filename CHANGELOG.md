@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.0-alpha.3] - 2023-06-24
+
+### Change
+- Reflex 4.3.2
+- Heist 5.2.1
+
 ## [3.0.0-alpha.2] - 2023-05-29
 
 ### Change
